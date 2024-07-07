@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splitwise/homepage.dart';
 import 'package:splitwise/Database/expense_database.dart';
 
 void main() async{
@@ -20,10 +21,14 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      
+      debugShowCheckedModeBanner: false,
+      title: 'Expense Tracker',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Homepage(),
     );
   }
 }
