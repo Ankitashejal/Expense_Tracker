@@ -33,6 +33,12 @@ class _HomepageState extends State<Homepage> {
               )
             ],
               ),
+              actions:[
+              
+              //cancel button
+              _CancelButton()
+              //save button
+],
             ));
   }
 
@@ -45,4 +51,20 @@ class _HomepageState extends State<Homepage> {
       ),
     );
   }
-}
+
+  //cancel button
+  Widget _CancelButton(){
+   return MaterialButton(
+    onPressed: () {
+      // Pop dialog
+      Navigator.pop(context);
+
+      // Clear controllers
+      nameController.clear();
+      amountController.clear();
+    },
+    child: const Text('Cancel'),
+  );
+    }
+  }
+
