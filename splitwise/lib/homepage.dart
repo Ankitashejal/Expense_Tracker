@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
 import 'package:splitwise/Database/expense_database.dart';
 import 'package:splitwise/helper/helper_functions.dart';
 import 'package:splitwise/models/expense.dart';
@@ -16,6 +16,12 @@ class _HomepageState extends State<Homepage> {
   // Text controllers
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
+
+  @override
+  void initState() {
+    Provider.of<ExpenseDatabase>(context, listen: false).readExpenses();
+    super.initState();
+  }
 
   void openNewExpenseBox() {
     showDialog(
@@ -49,11 +55,31 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: openNewExpenseBox,
-        child: const Icon(Icons.add),
+    return Consumer<ExpenseDatabase>(
+      builder: (context, value, child) => Scaffold(
+        floatingActionButton: Padding
+        (padding: const EdgeInsets.only(bottom: 30.0),
+        child: FloatingActionButton(
+          onPressed: openNewExpenseBox,
+          child: const Icon(Icons.add),
+        ),
+        ),
+        body: ListView.builder(
+            itemCount: value.allExpenses.length,
+            itemBuilder: (context, index) {
+              //get individual expense
+              Expense individualExpense = value.allExpenses[index];
+
+              //return list tile ui
+              return ListTile(
+                title: Text(individualExpense.name),
+                // subtitle: Text('${individualExpense.amount}'),
+                trailing: Text(individualExpense.amount.toString()),
+
+              );
+            }),
       ),
+      
     );
   }
 
@@ -75,7 +101,8 @@ class _HomepageState extends State<Homepage> {
   Widget _SaveButton() {
     return MaterialButton(
       onPressed: () async {
-        if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
+        if (nameController.text.isNotEmpty &&
+            amountController.text.isNotEmpty) {
           // Create new expense
           Expense newExpense = Expense(
             name: nameController.text,
