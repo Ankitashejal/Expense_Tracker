@@ -61,6 +61,7 @@ class _HomepageState extends State<Homepage> {
         (padding: const EdgeInsets.only(bottom: 30.0),
         child: FloatingActionButton(
           onPressed: openNewExpenseBox,
+          elevation: 0,
           child: const Icon(Icons.add),
         ),
         ),
@@ -74,7 +75,7 @@ class _HomepageState extends State<Homepage> {
               return ListTile(
                 title: Text(individualExpense.name),
                 // subtitle: Text('${individualExpense.amount}'),
-                trailing: Text(individualExpense.amount.toString()),
+                trailing: Text(formatAmount(individualExpense.amount)),
 
               );
             }),
