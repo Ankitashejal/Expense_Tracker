@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:splitwise/Database/expense_database.dart';
+import 'package:splitwise/components/my_list_tile.dart';
 import 'package:splitwise/helper/helper_functions.dart';
 import 'package:splitwise/models/expense.dart';
 
@@ -72,10 +73,9 @@ class _HomepageState extends State<Homepage> {
               Expense individualExpense = value.allExpenses[index];
 
               //return list tile ui
-              return ListTile(
-                title: Text(individualExpense.name),
-                // subtitle: Text('${individualExpense.amount}'),
-                trailing: Text(formatAmount(individualExpense.amount)),
+              return MyListTile (
+                title:individualExpense.name,
+                trailing: formatAmount(individualExpense.amount),
 
               );
             }),
